@@ -31,8 +31,6 @@ class Metodo():
     def __init__(self):
         self.descripcion = u'Método de resolución de problemas'
 
-
-
 class Inferencia():
     def __init__(self):
         pass
@@ -277,7 +275,7 @@ class Equiparar(Inferencia):
         for valor in self.resultados.lresultados:
             if(valor.puntuacion == -1):
                 print "\nRECHAZADO"
-                self.explicacion += u"\n\tValor terminal -> RECHAZADO!\n\n\n"
+                self.explicacion += u"\n\tValor terminal -> DESFAVORABLE MUY GRAVE!\n\n\n"
                 return (cd.ec.Decision(-1,"caso rechazado"), self.explicacion)
         #una vez tiene los valores, si la puntuacion es mayor que el  minimo
         #se acepta y no se sigue el algoritmo, si este es el ultimo y la puntuacion
@@ -285,11 +283,11 @@ class Equiparar(Inferencia):
         #quedan mas criterios, se continua
         if(self.puntuacion * 100 / self.puntuacionmax > self.pnecesario):
             print "\nACEPTADO"
-            self.explicacion += u"\n\tPuntuación suficiente (" + str(self.puntuacion) + u") -> ACEPTADO!\n\n\n"
+            self.explicacion += u"\n\tPuntuación suficiente (" + str(self.puntuacion) + u") -> FAVORABLE!\n\n\n"
             return (cd.ec.Decision(1, "caso aceptado"), self.explicacion)
         elif(self.final == True):
             print "\nRECHAZADO"
-            self.explicacion += u"\n\tPuntuación insuficiente (" + str(self.puntuacion) + u") -> RECHAZADO!\n\n\n"
+            self.explicacion += u"\n\tPuntuación insuficiente (" + str(self.puntuacion) + u") -> DESFAVORABLE GRAVE!\n\n\n"
             return (cd.ec.Decision(-1, "finalizado insuficiente"), self.explicacion)
         else:
             print "\nCONTINUAR EVALUANDO..."

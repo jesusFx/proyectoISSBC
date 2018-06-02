@@ -14,16 +14,15 @@ dominios = ['Erasmus', 'ITV']
 dominioActual = 'Erasmus'
 
 class Atributo():
-    '''Especificamos las propiedades de los atributos que van a usarse
-       en la base de conocimiento para describir un caso'''
+    '''Propiedades de los atributos a usar en la base de conocimiento para describir un caso'''
     def __init__(self,nombre,tipo,unidad,posiblesValores=None):
-        self.nombre  =nombre #nombre
-        self.tipo = tipo #tipo de atributo
-        self.unidad = unidad #unidad(si no la contemplamos)
-        if(tipo == 'bool'): #BOOLEANOS
+        self.nombre  =nombre #Nombre del caso
+        self.tipo = tipo #Tipo de atributo del caso
+        self.unidad = unidad #Unidad(si no la contemplamos)
+        if(tipo == 'bool'): #Elementos booleanos
             self.posiblesValores = ['True','False']
-        elif(tipo == 'multiple'): #Multiple eleccion
-            self.posiblesValores = posiblesValores
+        elif(tipo == 'opciones'): #Eleccion de opciones
+            self.posiblesValores = ['Correcto','Aceptable','Deteriorado']
 
 
 class Caracteristica():

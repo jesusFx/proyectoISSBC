@@ -52,7 +52,7 @@ class ValoracionDlg(QtGui.QWidget):
 
             #Establecemos el item en la columna 0
             self.tableWidgetCaso.setItem(i, 0, item1)
-            if at.atributo.tipo == 'bool' or at.atributo.tipo == 'multiple':
+            if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones':
                 item2= QtGui.QComboBox()
                 item2.addItems(at.atributo.posiblesValores)
                 self.tableWidgetCaso.setCellWidget(i, 1, item2)
@@ -144,8 +144,7 @@ class ValoracionDlg(QtGui.QWidget):
         self.show()
 
 
-        #Conexiones:
-        #==========
+        #Conexiones
         self.listWidgetValoraciones.activated[str].connect(self.changeValoracion)
         self.listWidgetDominios.activated[str].connect(self.changeDominio)
         self.listWidgetCriterios.itemClicked.connect(self.showCriterio)
@@ -153,7 +152,7 @@ class ValoracionDlg(QtGui.QWidget):
         self.borrarBtn.clicked.connect(self.borrar)
         self.salirBtn.clicked.connect(self.close)
 
-        #para que comiece mostrando el primer criterio en la descripcion
+        #Para que comience mostrando el primer criterio en la descripcion
         self.showCriterio()
 
 
