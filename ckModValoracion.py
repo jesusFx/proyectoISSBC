@@ -15,7 +15,7 @@ import esqConocimiento as ec
 def devolverDominio():
     '''Devolvemos el dominio de conocimiento elegido'''
     cd = None
-    if ec.dominioActual == 'Ejercito':
+    if ec.dominioActual == 'ITV':
         cd = domITV
     elif ec.dominioActual == 'Erasmus':
         cd = cdErasmus

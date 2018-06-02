@@ -12,7 +12,7 @@ Fecha: 26/05/2018
 import esqConocimiento as ec
 
 #Lista de Valoraciones
-valoraciones = ['Recluta','Oficial']
+valoraciones = ['Coche','Motocicleta']
 valoracionActual = ''
 
 def inicializarCaso():
@@ -44,7 +44,7 @@ class Teoria(ec.Atributo):
 
 def criterios(valoracion):
     criterios = []
-    if valoracion == 'Recluta':
+    if valoracion == 'Coche':
         crt1=ec.Criterio('Edad', Edad(), 'rango', 'ayo', 10, [18,25], True)
         crt2=ec.Criterio('Prueba Medica', Medico(),'igual', None, 10, True, True)       
         crt3=ec.Criterio('Prueba Psicotecnica', Psicotecnico(), 'igual', None, 10, True, True) 
@@ -64,7 +64,7 @@ def criterios(valoracion):
         criterios.append(crt7)
         criterios.append(crt8)
         
-    elif valoracion == 'Oficial':
+    elif valoracion == 'Motocicleta':
         crt1=ec.Criterio('Edad', Edad(), 'rango', 'ayo', 10, [20,35], True)
         crt2=ec.Criterio('Prueba Medica', Medico(),'igual', None, 10, True, True)       
         crt3=ec.Criterio('Prueba Psicotecnica', Psicotecnico(), 'igual', None, 10, True, True) 

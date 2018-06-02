@@ -10,7 +10,7 @@ Fecha: 26/05/2018
 """
 
 #Lista de dominios
-dominios = ['Erasmus', 'Ejercito']
+dominios = ['Erasmus', 'ITV']
 dominioActual = 'Erasmus'
 
 class Atributo():
