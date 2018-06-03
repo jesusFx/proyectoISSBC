@@ -17,7 +17,7 @@ def devolverDominio():
     cd = None
     if ec.dominioActual == 'ITV':
         cd = domITV
-    elif ec.dominioActual == 'Erasmus':
+    elif ec.dominioActual == 'Pan comun':
         cd = cdErasmus
     return cd
 

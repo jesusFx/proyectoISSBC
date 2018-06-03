@@ -52,7 +52,7 @@ class ValoracionDlg(QtGui.QWidget):
 
             #Establecemos el item en la columna 0
             self.tableWidgetCaso.setItem(i, 0, item1)
-            if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones':
+            if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones' or at.atributo.tipo == 'opciones2':
                 item2= QtGui.QComboBox()
                 item2.addItems(at.atributo.posiblesValores)
                 self.tableWidgetCaso.setCellWidget(i, 1, item2)
@@ -177,7 +177,7 @@ class ValoracionDlg(QtGui.QWidget):
                     self.caso.caracteristicas[i].valor = True
                 else:
                     self.caso.caracteristicas[i].valor = False
-            elif self.caso.caracteristicas[i].atributo.tipo == 'multiple':
+            elif self.caso.caracteristicas[i].atributo.tipo == 'opciones':
                 self.caso.caracteristicas[i].valor = self.tableWidgetCaso.cellWidget(i,1).currentText()
 
 
@@ -226,7 +226,7 @@ class ValoracionDlg(QtGui.QWidget):
     
                 #Establecemos el item en la columna 0
                 self.tableWidgetCaso.setItem(i, 0, item1)
-                if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones':
+                if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones' or at.atributo.tipo == 'opciones2':
                     item2= QtGui.QComboBox()
                     item2.addItems(at.atributo.posiblesValores)
                     self.tableWidgetCaso.setCellWidget(i, 1, item2)

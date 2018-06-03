@@ -10,8 +10,8 @@ Fecha: 26/05/2018
 """
 
 #Lista de dominios
-dominios = ['Erasmus', 'ITV']
-dominioActual = 'Erasmus'
+dominios = ['ITV', 'Pan comun']
+dominioActual = 'ITV'
 
 class Atributo():
     '''Propiedades de los atributos a usar en la base de conocimiento para describir un caso'''
@@ -23,6 +23,8 @@ class Atributo():
             self.posiblesValores = ['True','False']
         elif(tipo == 'opciones'): #Eleccion de opciones
             self.posiblesValores = ['Correcto','Aceptable','Deteriorado']
+        elif(tipo == 'opciones2'): #Eleccion de opciones de tipo 2
+            self.posiblesValores = ['Bajo','Alto']
 
 
 class Caracteristica():
