@@ -94,7 +94,7 @@ def criterios(valoracion):
         crt25=ec.Criterio('Motor [Deteriorado][0-1]: ruido, transmision, fuga de aceite', Motor(), 'igual', None, 0, 'Deteriorado', False)
         crt26=ec.Criterio('Motor [Aceptable][2]', Motor(), 'igual', None, 5, 'Aceptable', False)
         crt27=ec.Criterio('Motor [Correcto][3]', Motor(), 'igual', None, 15, 'Correcto', False)
-        criterios=ec.Criterios('Criterios de acceso', 55)
+        criterios=ec.Criterios('Criterios de estado del vehículo', 55)
        
         criterios.append(crt1)
         criterios.append(crt2)
@@ -146,7 +146,7 @@ def criterios(valoracion):
         crt19=ec.Criterio('Motor [Deteriorado][0-1]: ruido, transmision, fuga de aceite', Motor(), 'igual', None, 0, 'Deteriorado', False)
         crt20=ec.Criterio('Motor [Aceptable][2]', Motor(), 'igual', None, 5, 'Aceptable', False)
         crt21=ec.Criterio('Motor [Correcto][3]', Motor(), 'igual', None, 15, 'Correcto', False)
-        criterios=ec.Criterios('Criterios de acceso', 55)
+        criterios=ec.Criterios('Criterios de estado del vehículo', 55)
        
         criterios.append(crt1)
         criterios.append(crt2)

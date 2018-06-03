@@ -14,41 +14,61 @@ valoraciones = ['Pan'] #Valoración por defecto, en este caso no se usa para la 
 valoracionActual = ''
 
 def inicializarCaso():
-    edad=ec.Caracteristica(Edad(),20)
-    creditos=ec.Caracteristica(Creditos(),161)
-    notaMedia=ec.Caracteristica(Media(), 9)
-    nivelIngles=ec.Caracteristica(Ingles(), 'B2')
-    solicitud=ec.Caso([edad,creditos,notaMedia,nivelIngles])
+    harina=ec.Caracteristica(Harina(),100)
+    agua=ec.Caracteristica(Agua(),55)
+    levadura=ec.Caracteristica(Levadura(),4)
+    mejorante=ec.Caracteristica(Mejorante(), 'No')
+    masaM=ec.Caracteristica(MasaMadre(),20)
+    salY=ec.Caracteristica(Sal(),2)
+    fermentacion=ec.Caracteristica(Fermentacion(),70)
+    horno=ec.Caracteristica(Horno(),220)
+    coccion=ec.Caracteristica(Coccion(),35)
+    solicitud=ec.Caso([harina,agua,levadura,mejorante,masaM,salY,fermentacion,horno,coccion])
     return solicitud
 
 #Elementos del dominio sobre prestamos
-class Edad(ec.Atributo):
+class Harina(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Edad','int','ayo')
-class Creditos(ec.Atributo):
+        ec.Atributo.__init__(self,'Cantidad harina trigo (kg)','int',None,'estado')
+class Agua(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Creditos aprobados','int',None,'creditos')
-class Media(ec.Atributo):
+        ec.Atributo.__init__(self,'Cantidad agua (l)','int',None,'estado')
+class Levadura(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Nota media','int','puntos')
-class Ingles(ec.Atributo):
+        ec.Atributo.__init__(self,'Cantidad levadura (kg)','int',None,'estado')
+class Mejorante(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Nivel de ingles','multiple',None, ['B1','B2','C1','C2'])
+        ec.Atributo.__init__(self,'Uso mejorantes','varios',None, ['No','Si'])
+class MasaMadre(ec.Atributo):
+    def __init__(self):
+        ec.Atributo.__init__(self,'Cantidad masa madre (kg)','int',None,'estado')
+class Sal(ec.Atributo):
+    def __init__(self):
+        ec.Atributo.__init__(self,'Cantidad sal (kg)','int',None,'estado')
+class Fermentacion(ec.Atributo):
+    def __init__(self):
+        ec.Atributo.__init__(self,'Tiempo fermentacion (min)','int',None,'estado')
+class Horno(ec.Atributo):
+    def __init__(self):
+        ec.Atributo.__init__(self,'Temperatura horno (centig)','int',None, 'estado')
+class Coccion(ec.Atributo):
+    def __init__(self):
+        ec.Atributo.__init__(self,'Tiempo coccion (min)','int',None, 'estado')
 
 
 def criterios(valoracion):
     criterios = []
     
-    crt1=ec.Criterio('Edad', Edad(), 'rango', 'ayo', 10, [18,26], True)
-    crt2=ec.Criterio('Creditos aprobados[60-227]', Creditos(),'rango', 'creditos', 30, [60,227], True)       
-    crt3=ec.Criterio('Nota media[5-7]', Media(), 'rango', 'puntos', 20, [5,7], False)
-    crt4=ec.Criterio('Nota media[7-8]', Media(), 'rango', 'puntos', 30, [7,8], False)
-    crt5=ec.Criterio('Nota media[8-10]', Media(), 'rango', 'puntos', 50, [8,10], False)
-    crt6=ec.Criterio('Nivel de ingles-B1', Ingles(), 'categorica', None, 5, ['B1',],False)
-    crt7=ec.Criterio('Nivel de ingles-B2', Ingles(), 'categorica', None, 10, ['B2'],False)
-    crt8=ec.Criterio('Nivel de ingles-C1', Ingles(), 'categorica', None, 20, ['C1'],False)
-    crt9=ec.Criterio('Nivel de ingles-C2', Ingles(), 'categorica', None, 30, ['C2'],False)
-    criterios=ec.Criterios('Criterios de la Beca', 30)
+    crt1=ec.Criterio('Harina: peso (kg)', Harina(), 'rango', 'estado', 15, [95,105], True)
+    crt2=ec.Criterio('Agua: capacidad (l)', Agua(),'rango', 'estado', 15, [53,57], True)       
+    crt3=ec.Criterio('Levadura: peso (kg)', Levadura(), 'rango', 'estado', 15, [3,5], True)
+    crt4=ec.Criterio('Mejorante: peso', Mejorante(), 'categorica', None, 10, ['Si'], False)
+    crt5=ec.Criterio('Masa madre: peso (kg)', MasaMadre(), 'rango', 'puntos', 15, [19,21], True)
+    crt6=ec.Criterio('Sal: peso (kg)', Sal(), 'rango', 'estado', 15, [1,3], True)
+    crt7=ec.Criterio('Fermentacion: tiempo (min)', Fermentacion(), 'rango', 'estado', 15, [60,80], True)
+    crt8=ec.Criterio('Horno: temperatura (centig)', Horno(), 'rango', 'estado', 15, [200,250], True)
+    crt9=ec.Criterio('Coccion: tiempo (min)', Coccion(), 'rango', 'estado', 15, [25,45], True)
+    criterios=ec.Criterios('Criterios de estado del pan', 40)
    
     criterios.append(crt1)
     criterios.append(crt2)

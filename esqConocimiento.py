@@ -25,6 +25,8 @@ class Atributo():
             self.posiblesValores = ['Correcto','Aceptable','Deteriorado']
         elif(tipo == 'opciones2'): #Eleccion de opciones de tipo 2
             self.posiblesValores = ['Bajo','Alto']
+        elif(tipo == 'varios'): #Eleccion de varias opciones distintas
+            self.posiblesValores = posiblesValores
 
 
 class Caracteristica():
@@ -79,7 +81,7 @@ class Criterios():
         '''Retorna la puntuación al sumar el resultado de todos los criterios'''
         self.pmax = 0
         for criterio in self.lcriterios: #recorremos la lista de criterios
-            print 'criterio: ', criterio.nombre
+            print 'Criterio: ', criterio.nombre
             self.pmax += criterio.puntuacion
         return self.pmax
 
