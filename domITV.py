@@ -6,7 +6,7 @@ Nombre: domITV
 Descripcion: Fichero de dominio de vehículos de ITV
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 26/05/2018
+Fecha: 03/06/2018
 """
 
 import esqConocimiento as ec

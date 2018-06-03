@@ -5,11 +5,12 @@ Nombre: domPan
 Descripcion: Fichero de dominio sobre el pan común
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 26/05/2018
+Fecha: 03/06/2018
 """
 import esqConocimiento as ec
 
 #Lista de Valoraciones
+valoraciones = ['Pan'] #Valoración por defecto, en este caso no se usa para la valoración del dominio
 valoracionActual = ''
 
 def inicializarCaso():

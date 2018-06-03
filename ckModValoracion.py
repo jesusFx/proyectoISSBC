@@ -6,10 +6,10 @@ Nombre: ckModValoracion
 Descripcion: Funciones del sistema
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 26/05/2018
+Fecha: 03/06/2018
 """
 
-import cdErasmus, domITV
+import domPan, domITV
 import esqConocimiento as ec
 
 def devolverDominio():
@@ -18,7 +18,7 @@ def devolverDominio():
     if ec.dominioActual == 'ITV':
         cd = domITV
     elif ec.dominioActual == 'Pan comun':
-        cd = cdErasmus
+        cd = domPan
     return cd
 
 class Tarea():

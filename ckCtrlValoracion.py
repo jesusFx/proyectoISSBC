@@ -6,7 +6,7 @@ Nombre: ckCtrlValoracion
 Descripcion: Controlador del sistema
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 26/05/2018
+Fecha: 03/06/2018
 """
 
 from PyQt4 import QtGui
