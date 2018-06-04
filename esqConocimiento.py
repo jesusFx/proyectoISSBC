@@ -23,8 +23,6 @@ class Atributo():
             self.posiblesValores = ['True','False']
         elif(tipo == 'opciones'): #Eleccion de opciones
             self.posiblesValores = ['Correcto','Aceptable','Deteriorado']
-        elif(tipo == 'opciones2'): #Eleccion de opciones de tipo 2
-            self.posiblesValores = ['Bajo','Alto']
         elif(tipo == 'varios'): #Eleccion de varias opciones distintas
             self.posiblesValores = posiblesValores
 
@@ -53,12 +51,12 @@ class Criterio():
                  puntuacion,valor,terminal):
         self.nombre = nombre #nombre del criterio
         self.atributo = atributo #atributo
-        self.tipoComparacion = tipoComparacion #igual, mayor, menor, rango
-        self.tipoResultado = tipoResultado #unidad del atributo
-        self.puntuacion = puntuacion #los puntos que da al ser aceptado
-        self.valor = valor #valor que debe tener el atributo para que se cumpla el criterio.
+        self.tipoComparacion = tipoComparacion #Igual, mayor, menor, rango
+        self.tipoResultado = tipoResultado #Unidad del atributo
+        self.puntuacion = puntuacion #Los puntos que da al ser aceptado
+        self.valor = valor #Valor que debe tener el atributo para que se cumpla el criterio.
                            #a puede ser una tupla para una comparación tipo rango
-        self.terminal = terminal #si la condicion tiene que ser cumplida obligatoriamente
+        self.terminal = terminal #Si la condicion tiene que ser cumplida obligatoriamente
     def descripcion(self):
         '''Describimos el criterio en el panel del programa'''
         self.desc = u'Nombre:\t\t' + self.nombre  + u'\nComparación:\t' + self.tipoComparacion

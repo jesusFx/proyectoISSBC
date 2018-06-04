@@ -52,7 +52,7 @@ class Suspension(ec.Atributo):
         ec.Atributo.__init__(self,'Nivel suspension','opciones',None)
 class Emisiones(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Nivel emisiones','opciones2',None)
+        ec.Atributo.__init__(self,'Nivel emisiones','varios',None, ['Bajo','Alto'])
 class Niveles(ec.Atributo):
     def __init__(self):
         ec.Atributo.__init__(self,'Niveles marcados','opciones',None)
@@ -83,8 +83,8 @@ def criterios(valoracion):
         crt14=ec.Criterio('Suspension [Deteriorado][0]: muelles, amortiguadores', Suspension(), 'igual', None, 0, 'Deteriorado', False)
         crt15=ec.Criterio('Suspension [Aceptable][1]', Suspension(), 'igual', None, 5, 'Aceptable', False)
         crt16=ec.Criterio('Suspension [Correcto][2]', Suspension(), 'igual', None, 15, 'Correcto', False)
-        crt17=ec.Criterio('Emisiones [Bajo][0]: impurezas bajos', Emisiones(), 'igual', None, 15, 'Bajo', False)
-        crt18=ec.Criterio('Emisiones [Alto][1]', Emisiones(), 'igual', None, 5, 'Alto', False)
+        crt17=ec.Criterio('Emisiones [Bajo][0]: impurezas bajos', Emisiones(), 'categorica', None, 15, ['Bajo','Alto'], False)
+        crt18=ec.Criterio('Emisiones [Alto][1]', Emisiones(), 'categorica', None, 5, ['Bajo','Alto'], False)
         crt19=ec.Criterio('Niveles [Deteriorado][0-2]: frenos, aceite, refrigerador, limpiaparabrisas, conductos', Niveles(), 'igual', None, 0, 'Deteriorado', False)
         crt20=ec.Criterio('Niveles [Aceptable][3]', Niveles(), 'igual', None, 5, 'Aceptable', False)
         crt21=ec.Criterio('Niveles [Correcto][4-5]', Niveles(), 'igual', None, 15, 'Correcto', False)

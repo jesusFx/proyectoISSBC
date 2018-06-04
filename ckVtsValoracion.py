@@ -25,8 +25,9 @@ class ValoracionDlg(QtGui.QWidget):
         #Labels
         self.labelTableWidgetCaso=QtGui.QLabel(u"Caso", self)
         self.labelListDominios=QtGui.QLabel(u"Dominio",self)
-        self.labelListValoraciones=QtGui.QLabel(u"Valoracion",self)
+        self.labelListValoraciones=QtGui.QLabel(u"Valoración",self)
         self.labelListCriterios=QtGui.QLabel(u"Criterios",self)
+        #self.labelTableCriterios=QtGui.QLabel(u"Criterios2",self)
         self.labelTextDescripcionCriterio=QtGui.QLabel(u"Descripcion del criterio", self)
         self.labelTextjustificacionL=QtGui.QLabel(u"Justificación de la valoración", self)
         self.labelTextResultado=QtGui.QLabel(u"Resultado Final")
@@ -38,12 +39,14 @@ class ValoracionDlg(QtGui.QWidget):
         if self.dominio is not None:
             self.listWidgetDominios.addItems(self.dominio)
 
-        #Table
+        
+        #Tabla para caso
         self.header = ['ATRIBUTO', 'VALOR']
         self.tableWidgetCaso = QtGui.QTableWidget(len(self.caso.caracteristicas),2) #Crea la tabla de elementos observables de dos columnas
-        self.tableWidgetCaso.setColumnWidth(0, 225) #Asignan ancho a las columnas izq
-        self.tableWidgetCaso.setColumnWidth(1, 225) #Asignan ancho a las columnas derech
-        self.tableWidgetCaso.setHorizontalHeaderLabels(self.header) #Asigna el header a las columnas
+        self.tableWidgetCaso.setColumnWidth(0, 160) #Asignan ancho a las columnas izq
+        self.tableWidgetCaso.setColumnWidth(1, 124) #Asignan ancho a las columnas derech
+        self.tableWidgetCaso.setHorizontalHeaderLabels(self.header) #Asigna el header a las columnas 
+        
 
         i=0
         for at in self.caso.caracteristicas:
@@ -52,7 +55,7 @@ class ValoracionDlg(QtGui.QWidget):
 
             #Establecemos el item en la columna 0
             self.tableWidgetCaso.setItem(i, 0, item1)
-            if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones' or at.atributo.tipo == 'opciones2' or at.atributo.tipo == 'varios':
+            if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones' or at.atributo.tipo == 'varios':
                 item2= QtGui.QComboBox()
                 item2.addItems(at.atributo.posiblesValores)
                 self.tableWidgetCaso.setCellWidget(i, 1, item2)
@@ -81,7 +84,16 @@ class ValoracionDlg(QtGui.QWidget):
 
             self.listWidgetCriterios.addItems(stringList)
             self.listWidgetCriterios.setCurrentRow(0)
-
+        
+        '''    
+        #Tabla para descripcion de criterio
+        self.header2 = ['TIPO', 'CRITERIO']
+        self.tableWidgetCriterio = QtGui.QTableWidget(len(self.caso.caracteristicas),2)
+        self.tableWidgetCriterio.setColumnWidth(0, 160) 
+        self.tableWidgetCriterio.setColumnWidth(1, 124) 
+        self.tableWidgetCriterio.setHorizontalHeaderLabels(self.header2)
+        '''
+            
         #Cuadro de texto de descripcion de la clase
         self.plainTextEditDescripcionCriterio = QtGui.QPlainTextEdit()
         #Cuadro de texto de la explicacion
@@ -103,42 +115,43 @@ class ValoracionDlg(QtGui.QWidget):
 
         #Rejilla de distribucion de los controles
         grid = QtGui.QGridLayout()
-        grid.setSpacing(3)
+        grid.setSpacing(2)
         
         grid.addWidget(self.labelListDominios, 0,0)
-        grid.addWidget(self.listWidgetDominios, 1, 0)
+        grid.addWidget(self.listWidgetDominios, 1,0)
+        
+        grid.addWidget(self.labelListValoraciones, 0,1)
+        grid.addWidget(self.listWidgetValoraciones, 1,1)
 
         grid.addWidget(self.labelTableWidgetCaso, 2,0)
         grid.addWidget(self.tableWidgetCaso, 3, 0)
+
+        grid.addWidget(self.labelListCriterios, 4,0)
+        grid.addWidget(self.listWidgetCriterios, 5,0)
         
-        grid.addWidget(self.labelListValoraciones, 4,0)
-        grid.addWidget(self.listWidgetValoraciones, 5,0)
-
-        grid.addWidget(self.labelListCriterios, 6,0)
-        grid.addWidget(self.listWidgetCriterios, 7, 0)
-
-        grid.addWidget(self.labelTextDescripcionCriterio, 8,0)
-        grid.addWidget(self.plainTextEditDescripcionCriterio, 9, 0)
+        grid.addWidget(self.labelTextResultado, 2,1)
+        grid.addWidget(self.plainTextEditResultado, 3,1,1,1)
         
-        grid.addWidget(self.labelTextResultado, 0,1)
-        grid.addWidget(self.plainTextEditResultado, 1,1,3,1)
+        grid.addWidget(self.labelTextDescripcionCriterio, 4,1)
+        grid.addWidget(self.plainTextEditDescripcionCriterio, 5,1)
 
-        grid.addWidget(self.labelTextjustificacionL, 4, 1)
-        grid.addWidget(self.plainTextEditExplicacion, 5, 1, 6,1)
+        grid.addWidget(self.labelTextjustificacionL, 0, 2)
+        grid.addWidget(self.plainTextEditExplicacion, 1, 2, 5, 1)
         
         
         
 
         #grid.addWidget(self.labelTextDecision, 6, 0, 6, 2)
 
-        #Diseno principal
+        #Diseño principal
         mainLayout = QtGui.QVBoxLayout()
         mainLayout.addLayout(grid)
         mainLayout.addLayout(self.btnsLayout)
         self.setLayout(mainLayout)
 
 
-        self.setGeometry(300, 300, 1000, 600)
+        #Geometría de la ventana emergente
+        self.setGeometry(300, 300, 1100, 600)
         self.setWindowTitle(u"Tarea de valoración")
         self.center()
         self.show()
@@ -187,11 +200,13 @@ class ValoracionDlg(QtGui.QWidget):
         self.plainTextEditDescripcionCriterio.appendPlainText(self.cri.lcriterios[row].descripcion())
 
 
+    #Funcion que invoca la valoracion de criterios
     def valorar(self):
         print '\nValorar btn...'
         self.recogerDatos()
         ctrl.eventValorar(self)
-        
+    
+    #Funcion que borra por pantalla
     def borrar(self):
         self.plainTextEditDescripcionCriterio.clear()
         self.plainTextEditExplicacion.clear()
@@ -226,7 +241,7 @@ class ValoracionDlg(QtGui.QWidget):
     
                 #Establecemos el item en la columna 0
                 self.tableWidgetCaso.setItem(i, 0, item1)
-                if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones' or at.atributo.tipo == 'opciones2' or at.atributo.tipo == 'varios':
+                if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones' or at.atributo.tipo == 'varios':
                     item2= QtGui.QComboBox()
                     item2.addItems(at.atributo.posiblesValores)
                     self.tableWidgetCaso.setCellWidget(i, 1, item2)
