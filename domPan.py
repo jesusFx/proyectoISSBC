@@ -5,7 +5,7 @@ Nombre: domPan
 Descripcion: Fichero de dominio sobre el pan común
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 03/06/2018
+Fecha: 05/06/2018
 """
 import esqConocimiento as ec
 
@@ -29,22 +29,22 @@ def inicializarCaso():
 #Elementos del dominio sobre prestamos
 class Harina(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Cantidad harina trigo (kg)','int',None,'estado')
+        ec.Atributo.__init__(self,'Harina trigo (kg)','int',None,'estado')
 class Agua(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Cantidad agua (l)','int',None,'estado')
+        ec.Atributo.__init__(self,'Agua (l)','int',None,'estado')
 class Levadura(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Cantidad levadura (kg)','int',None,'estado')
+        ec.Atributo.__init__(self,'Levadura (kg)','int',None,'estado')
 class Mejorante(ec.Atributo):
     def __init__(self):
         ec.Atributo.__init__(self,'Uso mejorantes','varios',None, ['No','Si'])
 class MasaMadre(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Cantidad masa madre (kg)','int',None,'estado')
+        ec.Atributo.__init__(self,'Masa madre (kg)','int',None,'estado')
 class Sal(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Cantidad sal (kg)','int',None,'estado')
+        ec.Atributo.__init__(self,'Sal (kg)','int',None,'estado')
 class Fermentacion(ec.Atributo):
     def __init__(self):
         ec.Atributo.__init__(self,'Tiempo fermentacion (min)','int',None,'estado')

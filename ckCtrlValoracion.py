@@ -6,7 +6,7 @@ Nombre: ckCtrlValoracion
 Descripcion: Controlador del sistema
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 03/06/2018
+Fecha: 05/06/2018
 """
 
 from PyQt4 import QtGui
@@ -27,7 +27,7 @@ def eventValorar(ValoracionDlg):
         resultado = u"CASO RECHAZADO\n"
         ValoracionDlg.plainTextEditResultado.setStyleSheet("QPlainTextEdit{color:red}")
     else:
-        resultado = "CASO ACEPTADO\n"
+        resultado = u"CASO ACEPTADO\n"
         ValoracionDlg.plainTextEditResultado.setStyleSheet("QPlainTextEdit{color:green}")
     ValoracionDlg.plainTextEditResultado.appendPlainText(resultado+data)
     ValoracionDlg.plainTextEditResultado.moveCursor(QtGui.QTextCursor.Start)

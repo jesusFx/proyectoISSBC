@@ -6,7 +6,7 @@ Nombre: ckModValoracion
 Descripcion: Funciones del sistema
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 03/06/2018
+Fecha: 05/06/2018
 """
 
 import domPan, domITV
@@ -14,12 +14,12 @@ import esqConocimiento as ec
 
 def devolverDominio():
     '''Devolvemos el dominio de conocimiento elegido'''
-    cd = None
+    dom = None
     if ec.dominioActual == 'ITV':
-        cd = domITV
+        dom = domITV
     elif ec.dominioActual == 'Pan comun':
-        cd = domPan
-    return cd
+        dom = domPan
+    return dom
 
 class Tarea():
     '''Definimos la tarea a realizar'''
@@ -47,24 +47,24 @@ class MetodoValoracion(Metodo):
         self.pmaxima = 0
         self.pnecesario = 60
         self.decision = None #decision que va a gobernar el bucle
-        self.explicacion = u"Explicación: \n"
-        self.cd = devolverDominio()
+        self.explicacion = u"Procedimiento causal de valoración: \n\n"
+        self.dom = devolverDominio()
 
     def execute(self):
-        cd = devolverDominio() #Almacenamos el dominio
+        dom = devolverDominio() #Almacenamos el dominio
         
         print "\nEjecutando tarea de valoración..." 
-        self.explicacion += u"Ejecutando tarea de valoración..."
+        self.explicacion += u"Ejecutando tarea de valoración...\n"
         
-        self.decision = cd.ec.Decision(0, " ")#inicializamos la variable decision (0-continua, -1-para, 1-Acepta)
-        self.resultados = cd.ec.Resultados()#inicializamos la variable Resultado
+        self.decision = dom.ec.Decision(0, " ") #Inicializamos la variable decision (0-continua, -1-para, 1-Acepta)
+        self.resultados = dom.ec.Resultados() #Inicializamos la variable Resultado
 
         print "\nEspecificando criterios.."
-        self.explicacion += u"\nEspecificando criterios..."
+        self.explicacion += u"\nEspecificando criterios...\n"
         
         self.criterios = Especificar(self.caso).execute() #Almacenamos los criterios de cada base de conocimiento
-        self.pmaxima = self.criterios.puntuacionmax() #la suma del valor de todos los criterios
-        self.pnecesario = self.criterios.pnecesario #puntos necesarios para cada caso
+        self.pmaxima = self.criterios.puntuacionmax() #La suma del valor de todos los criterios
+        self.pnecesario = self.criterios.pnecesario #Puntos necesarios para cada caso
         
         #mientras que no se decida nada..
         while(self.decision.decision == 0):
@@ -75,7 +75,7 @@ class MetodoValoracion(Metodo):
             #si la lista no esta vacia, eliminamos un criterio
             #si no hay mas criterios, salimos del bucle y equiparamos antes
             if(self.criterio == None):
-                print "\nNo quedan mas criterios...finalizando..."#Mostamos en consola
+                print "\nNo quedan mas criterios...finalizando..." #Mostramos en consola
                 self.explicacion += u"\nNo quedan mas criterios...finalizando\n"
                 self.decision, self.valexpl = Equiparar(self.resultados, self.pmaxima, self.pnecesario, True).execute()
                 self.explicacion += self.valexpl
@@ -96,6 +96,7 @@ class MetodoValoracion(Metodo):
             #se equipara el resultado
             self.decision, self.valexpl = Equiparar(self.resultados, self.pmaxima, self.pnecesario, False).execute()
             self.explicacion += self.valexpl
+            
         print u'\nTarea finalizada'
         self.explicacion += u"Tarea finalizada\n"
         #se anade la justificacion al objeto decision
@@ -113,10 +114,10 @@ class Especificar(Inferencia):
         Inferencia.__init__(self)
         self.caso = caso
     def execute(self):
-        cd = devolverDominio()
-        valoracion = cd.valoracionActual
+        dom = devolverDominio()
+        valoracion = dom.valoracionActual
         print valoracion
-        self.criterios = cd.criterios(valoracion)
+        self.criterios = dom.criterios(valoracion)
         return self.criterios
 
 
@@ -145,110 +146,109 @@ class Evaluar(Inferencia):
         self.explicacion = " "
 
     def execute(self):
-        cd = devolverDominio()
+        dom = devolverDominio()
         print "\nEvaluando criterio..."
-        self.explicacion += u"\n\tEvaluando criterio: " + self.criterio.nombre + u"\n\t================================="
+        self.explicacion += u"\tEvaluando criterio seleccionado...\n\t=========================="
         self.explicacion += u"\n\tTipo de comparación: " + self.criterio.tipoComparacion
         self.explicacion += u"\n\tValor necesario: " + str(self.criterio.valor)
         self.explicacion += u"\n\tPuntuación: " + str(self.criterio.puntuacion)
         self.explicacion += u"\n\tTerminal: " + str(self.criterio.terminal)
-        #se recorre cada caracteristica del caso y se va comparando con el criterio
+        #Se recorre cada caracteristica del caso y se va comparando con el criterio
         for carac in self.caso.caracteristicas:
             if carac.atributo.nombre == self.criterio.atributo.nombre:
-                #si un valor es terminal y falla, se mand un valor negativo, indicando
-                #que no hace falta seguir, si no es terminal y falla, se manda 0, no
-                #dandose puntos, si no falla, se manda la puntuacion del criterio. se
-                #repite esto con cada tipo de comparacion por lo que se genera
-                #un objeto valor por cada atributo del caso
+                #Si un valor es terminal y falla, se manda un valor negativo, indicando que no hace falta seguir
+                #Si no es terminal y falla, se manda 0, no dandose puntos
+                #Si no falla, se manda la puntuacion del criterio
+                #Se repite esto con cada tipo de comparacion por lo que se genera un objeto valor por cada atributo del caso
                 if self.criterio.tipoComparacion == 'rango':
-                    self.explicacion += u"\n\n\t--------Característica: " + carac.atributo.nombre
-                    self.explicacion += u"\n\t\tValor: " + str(carac.valor)
+                    self.explicacion += u"\n\n\t-->Característica:\n\t    " + carac.atributo.nombre
+                    self.explicacion += u"\n\t    Valor: " + str(carac.valor)
                     if carac.valor < self.criterio.valor[0] or carac.valor > self.criterio.valor[1]:
                         if self.criterio.terminal == True:
-                            self.explicacion += u"\n\t\t" + str(carac.valor) + u" no se encuentra en el rango " + str(self.criterio.valor)
-                            self.explicacion += u"\n\t\tpuntuación + " + str(-1) + u" puntos, terminal\n"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, -1)
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no se encuentra en el rango " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, fuera de rango"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
-                            self.explicacion += u"\n\t\t" + str(carac.valor) + u" no se encuentra en el rango " + str(self.criterio.valor)
-                            self.explicacion += u"\n\t\tpuntuación + 0 puntos\n"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, 0)
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no se encuentra en el rango " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación +0 puntos\n"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, 0)
                     else:
-                        self.explicacion += u"\n\t\t" + str(carac.valor) + u" pertenece al rango " + str(self.criterio.valor)
-                        self.explicacion += u"\n\t\tpuntuación + " + str(self.criterio.puntuacion) + u" puntos\n"
-                        self.valor = cd.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
+                        self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" pertenece al rango " + str(self.criterio.valor) + u"\n\n"
+                        self.explicacion += u"\n\t    Puntuación +" + str(self.criterio.puntuacion) + u" puntos\n"
+                        self.valor = dom.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
 
 
                 elif self.criterio.tipoComparacion == 'igual':
-                    self.explicacion += u"\n\n\t--------Característica: " + carac.atributo.nombre
-                    self.explicacion += u"\n\t\tValor: " + str(carac.valor)
+                    self.explicacion += u"\n\n\t-->Característica:\n\t    " + carac.atributo.nombre
+                    self.explicacion += u"\n\t    Valor: " + str(carac.valor)
                     if carac.valor != self.criterio.valor:
                         if self.criterio.terminal == True:
-                            self.explicacion += u"\n\t\t" + str(carac.valor) + u" no es igual a " + str(self.criterio.valor)
-                            self.explicacion += u"\n\t\tpuntuación + " + str(-1) + u" puntos, terminal\n"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, -1)
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es igual a " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no es igual"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
-                            self.explicacion += u"\n\t\t" + str(carac.valor) + u" no es igual a " + str(self.criterio.valor)
-                            self.explicacion += u"\n\t\tpuntuación + 0 puntos\n"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, 0)
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es igual a " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación +0 puntos\n"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, 0)
                     else:
-                        self.explicacion += u"\n\t\t" + str(carac.valor) + u" es igual a " + str(self.criterio.valor)
-                        self.explicacion += u"\n\t\tpuntuación + " + str(self.criterio.puntuacion) + u" puntos\n"
-                        self.valor = cd.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
+                        self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" es igual a " + str(self.criterio.valor) + u"\n\n"
+                        self.explicacion += u"\n\t    Puntuación +" + str(self.criterio.puntuacion) + u" puntos\n"
+                        self.valor = dom.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
 
 
                 elif self.criterio.tipoComparacion == 'mayor':
-                    self.explicacion += u"\n\n\t--------Característica: " + carac.atributo.nombre
-                    self.explicacion += u"\n\t\tValor: " + str(carac.valor)
+                    self.explicacion += u"\n\n\t-->Característica:\n\t    " + carac.atributo.nombre
+                    self.explicacion += u"\n\t    Valor: " + str(carac.valor)
                     if carac.valor < self.criterio.valor:
                         if self.criterio.terminal == True:
-                            self.explicacion += u"\n\t\t" + str(carac.valor) + u" no es mayor que " + str(self.criterio.valor)
-                            self.explicacion += u"\n\t\tpuntuación + " + str(-1) + u" puntos, terminal"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, -1)
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es mayor que " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, finalizado"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
-                            self.explicacion += u"\n\t\t" + str(carac.valor) + u" no es mayor que " + str(self.criterio.valor)
-                            self.explicacion += u"\n\t\tpuntuación + 0 puntos"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, 0)
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es mayor que " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación +0 puntos"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, 0)
                     else:
-                        self.explicacion += u"\n\t\t" + str(carac.valor) + u" es mayor que " + str(self.criterio.valor)
-                        self.explicacion += u"\n\t\tpuntuación + " + str(self.criterio.puntuacion) + u" puntos"
-                        self.valor = cd.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
+                        self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" es mayor que " + str(self.criterio.valor) + u"\n\n"
+                        self.explicacion += u"\n\t    Puntuación +" + str(self.criterio.puntuacion) + u" puntos"
+                        self.valor = dom.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
 
 
                 elif self.criterio.tipoComparacion == 'menor':
-                    self.explicacion += u"\n\n\t--------Característica: " + carac.atributo.nombre
-                    self.explicacion += u"\n\t\tValor: " + str(carac.valor)
+                    self.explicacion += u"\n\n\t-->Característica:\n\t    " + carac.atributo.nombre
+                    self.explicacion += u"\n\t    Valor: " + str(carac.valor)
                     if carac.valor > self.criterio.valor:
                         if self.criterio.terminal == True:
-                            self.explicacion += u"\n\t\t" + str(carac.valor) + u" no es menor que " + str(self.criterio.valor)
-                            self.explicacion += u"\n\t\tpuntuación + " + str(-1) + u" puntos, terminal"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, -1)
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es menor que " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no es menor"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
-                            self.explicacion += u"\n\t\t" + str(carac.valor) + u" no es menor que " + str(self.criterio.valor)
-                            self.explicacion += u"\n\t\tpuntuación + 0 puntos"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, 0)
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es menor que " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación +0 puntos"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, 0)
                     else:
-                        self.explicacion += u"\n\t\t" + str(carac.valor) + u" es menor que " + str(self.criterio.valor)
-                        self.explicacion += u"\n\t\tpuntuación + " + str(self.criterio.puntuacion) + u" puntos"
-                        self.valor = cd.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
+                        self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" es menor que " + str(self.criterio.valor) + u"\n\n"
+                        self.explicacion += u"\n\t    Puntuación +" + str(self.criterio.puntuacion) + u" puntos"
+                        self.valor = dom.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
                 elif self.criterio.tipoComparacion == 'categorica':
-                    self.explicacion += u"\n\n\t--------Característica: " + carac.atributo.nombre
-                    self.explicacion += u"\n\t\tValor: " + str(carac.valor)
+                    self.explicacion += u"\n\n\t-->Característica:\n\t    " + carac.atributo.nombre
+                    self.explicacion += u"\n\t    Valor: " + str(carac.valor)
                     encontrado = False
                     for i in self.criterio.valor:
                         if i == carac.valor:
                             encontrado = True
                     if encontrado == False:
-                        self.explicacion += u"\n\t\t"+ str(carac.valor) + u" no se encuentra dentro de "+ str(self.criterio.valor)
+                        self.explicacion += u"\n\t    El valor "+ str(carac.valor) + u" no se encuentra dentro de "+ str(self.criterio.valor) + u"\n"
                         if self.criterio.terminal == True:
-                            self.explicacion += u"\n\t\tpuntuación + " + str(-1) + u" puntos, terminal"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, -1)
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no está contenido"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
-                            self.explicacion += u"\n\t\tpuntuación + 0 puntos"
-                            self.valor = cd.ec.Valor(self.criterio, self.caso, 0)
+                            self.explicacion += u"\n\t    Puntuación +0 puntos"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, 0)
                     else:
-                        self.explicacion += u"\n\t\t"+ str(carac.valor) + u" se encuentra dentro de "+ str(self.criterio.valor)
-                        self.explicacion += u"\n\t\tpuntuación + " + str(self.criterio.puntuacion) + u" puntos"
-                        self.valor = cd.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
+                        self.explicacion += u"\n\t    El valor "+ str(carac.valor) + u" se encuentra dentro de "+ str(self.criterio.valor)+ u"\n\n"
+                        self.explicacion += u"\n\t    Puntuación +" + str(self.criterio.puntuacion) + u" puntos"
+                        self.valor = dom.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
 
                         
         return (self.valor, self.explicacion)
@@ -266,30 +266,31 @@ class Equiparar(Inferencia):
         self.pnecesario = pnecesario
         self.final = final
         self.explicacion = u" "
+        
     def execute(self):
-        cd = devolverDominio()
+        dom = devolverDominio()
         print "\nEquiparando..."
-        self.explicacion += u"\n\n\n\tEquiparando el caso \n================================="
+        self.explicacion += u"\n\n\n\tEquiparando el caso \n\t=========================="
         #por cada valor, si encontramos un negativo, se termina y se rechaza,
         #si no, se acumulan los valores.
         for valor in self.resultados.lresultados:
             if(valor.puntuacion == -1):
                 print "\nRECHAZADO"
                 self.explicacion += u"\n\tValor terminal -> DESFAVORABLE MUY GRAVE!\n\n\n"
-                return (cd.ec.Decision(-1,"caso rechazado"), self.explicacion)
+                return (dom.ec.Decision(-1,"caso rechazado"), self.explicacion)
         #una vez tiene los valores, si la puntuacion es mayor que el  minimo
         #se acepta y no se sigue el algoritmo, si este es el ultimo y la puntuacion
         #no es suficiente, se rechaza y acaba, si no se llega al minimo pero
         #quedan mas criterios, se continua
         if(self.puntuacion * 100 / self.puntuacionmax > self.pnecesario):
-            print "\nACEPTADO"
+            print "\nACEPTADO" 
             self.explicacion += u"\n\tPuntuación suficiente (" + str(self.puntuacion) + u") -> FAVORABLE!\n\n\n"
-            return (cd.ec.Decision(1, "caso aceptado"), self.explicacion)
+            return (dom.ec.Decision(1, "caso aceptado"), self.explicacion)
         elif(self.final == True):
             print "\nRECHAZADO"
             self.explicacion += u"\n\tPuntuación insuficiente (" + str(self.puntuacion) + u") -> DESFAVORABLE GRAVE!\n\n\n"
-            return (cd.ec.Decision(-1, "finalizado insuficiente"), self.explicacion)
+            return (dom.ec.Decision(-1, "finalizado insuficiente"), self.explicacion)
         else:
             print "\nCONTINUAR EVALUANDO..."
             self.explicacion += u"\n\tPuntuación insuficiente (" + str(self.puntuacion) + u") -> CONTINUAR EVALUANDO\n\n\n"
-            return (cd.ec.Decision(0, "continuar evaluando"), self.explicacion)
+            return (dom.ec.Decision(0, "continuar evaluando"), self.explicacion)

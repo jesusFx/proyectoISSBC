@@ -6,7 +6,7 @@ Nombre: esqConocimiento
 Descripcion: Esquema de conocimiento
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 03/06/2018
+Fecha: 05/06/2018
 """
 
 #Lista de dominios
@@ -49,9 +49,9 @@ class Criterio():
     '''Establece un criterio a evaluar'''
     def __init__(self,nombre,atributo,tipoComparacion,tipoResultado,
                  puntuacion,valor,terminal):
-        self.nombre = nombre #nombre del criterio
-        self.atributo = atributo #atributo
-        self.tipoComparacion = tipoComparacion #Igual, mayor, menor, rango
+        self.nombre = nombre #Nombre del criterio
+        self.atributo = atributo #Atributo
+        self.tipoComparacion = tipoComparacion #Igual, mayor, menor, rango, categorica
         self.tipoResultado = tipoResultado #Unidad del atributo
         self.puntuacion = puntuacion #Los puntos que da al ser aceptado
         self.valor = valor #Valor que debe tener el atributo para que se cumpla el criterio.

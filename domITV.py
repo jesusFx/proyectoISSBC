@@ -6,7 +6,7 @@ Nombre: domITV
 Descripcion: Fichero de dominio de vehículos de ITV
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 03/06/2018
+Fecha: 05/06/2018
 """
 
 import esqConocimiento as ec
@@ -37,7 +37,7 @@ class Documentacion(ec.Atributo):
         ec.Atributo.__init__(self,'Documentacion disponible','int',None,'Puntos')
 class Frenos(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Estado frenos','opciones',None)
+        ec.Atributo.__init__(self,'Numero frenos','opciones',None)
 class Interior(ec.Atributo):
     def __init__(self):
         ec.Atributo.__init__(self,'Estado interior','opciones',None)
@@ -58,7 +58,7 @@ class Niveles(ec.Atributo):
         ec.Atributo.__init__(self,'Niveles marcados','opciones',None)
 class Neumaticos(ec.Atributo):
     def __init__(self):
-        ec.Atributo.__init__(self,'Estado neumaticos','opciones',None)
+        ec.Atributo.__init__(self,'Numero neumaticos','opciones',None)
 class Motor(ec.Atributo):
     def __init__(self):
         ec.Atributo.__init__(self,'Estado motor','opciones',None)

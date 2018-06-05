@@ -6,7 +6,7 @@ Nombre: ckVTSValoracion
 Descripcion: Vistas del sistema
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 03/06/2018
+Fecha: 05/06/2018
 """
 
 from PyQt4 import QtCore
@@ -18,19 +18,19 @@ import esqConocimiento as ec
 class ValoracionDlg(QtGui.QWidget):
     def __init__(self, caso = None):
         super(ValoracionDlg, self).__init__()
-        self.cd = ctrl.ma.devolverDominio()
-        self.caso = self.cd.inicializarCaso()
+        self.dom = ctrl.ma.devolverDominio()
+        self.caso = self.dom.inicializarCaso()
         
 
         #Labels
         self.labelTableWidgetCaso=QtGui.QLabel(u"Caso", self)
         self.labelListDominios=QtGui.QLabel(u"Dominio",self)
-        self.labelListValoraciones=QtGui.QLabel(u"Valoración",self)
+        self.labelListValoraciones=QtGui.QLabel(u"Tipo de valoración",self)
         self.labelListCriterios=QtGui.QLabel(u"Criterios",self)
         #self.labelTableCriterios=QtGui.QLabel(u"Criterios2",self)
         self.labelTextDescripcionCriterio=QtGui.QLabel(u"Descripcion del criterio", self)
         self.labelTextjustificacionL=QtGui.QLabel(u"Justificación de la valoración", self)
-        self.labelTextResultado=QtGui.QLabel(u"Resultado Final")
+        self.labelTextResultado=QtGui.QLabel(u"Resultado final")
         self.labelTextDecision=QtGui.QLabel(u" ",self)
         
         #Lista de dominios
@@ -69,14 +69,14 @@ class ValoracionDlg(QtGui.QWidget):
 
         #Lista de valoraciones
         self.listWidgetValoraciones = QtGui.QComboBox()
-        self.valoraciones = self.cd.valoraciones
+        self.valoraciones = self.dom.valoraciones
         if self.valoraciones is not None:
             self.listWidgetValoraciones.addItems(self.valoraciones)
 
         #Lista de criterios
         self.listWidgetCriterios = QtGui.QListWidget()
-        self.cd.valoracionActual = self.valoraciones[0]
-        self.cri = self.cd.criterios(self.valoraciones[0])
+        self.dom.valoracionActual = self.valoraciones[0]
+        self.cri = self.dom.criterios(self.valoraciones[0])
         if self.cri is not None:
             stringList = []
             for c in self.cri.lcriterios:
@@ -227,9 +227,9 @@ class ValoracionDlg(QtGui.QWidget):
             
             #Cambiamos el dominio
             ec.dominioActual = text
-            self.cd = ctrl.ma.devolverDominio()
-            self.caso = self.cd.inicializarCaso()
-            self.valoraciones = self.cd.valoraciones
+            self.dom = ctrl.ma.devolverDominio()
+            self.caso = self.dom.inicializarCaso()
+            self.valoraciones = self.dom.valoraciones
             
             
             self.tableWidgetCaso.setRowCount(len(self.caso.caracteristicas))
@@ -256,7 +256,7 @@ class ValoracionDlg(QtGui.QWidget):
             if self.valoraciones is not None:
                 self.listWidgetValoraciones.addItems(self.valoraciones)
                 
-            self.cri = self.cd.criterios(self.valoraciones[0])
+            self.cri = self.dom.criterios(self.valoraciones[0])
             
             if self.cri is not None:
                 stringList = []
@@ -268,11 +268,11 @@ class ValoracionDlg(QtGui.QWidget):
 
 
     def changeValoracion(self,text):
-        if text != self.cd.valoracionActual:
+        if text != self.dom.valoracionActual:
             self.plainTextEditDescripcionCriterio.clear()
             self.listWidgetCriterios.clear()
-            self.cd.valoracionActual = text
-            self.cri = self.cd.criterios(text)
+            self.dom.valoracionActual = text
+            self.cri = self.dom.criterios(text)
             if self.cri is not None:
                 stringList = []
                 for c in self.cri.lcriterios:
