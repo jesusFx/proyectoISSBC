@@ -68,33 +68,40 @@ def criterios(valoracion):
     criterios = []
     if valoracion == 'Coche':
         crt1=ec.Criterio('Documentacion [1-3]: permiso, tarjeta inspeccion tecnica, comprobante pago seguro', Documentacion(), 'rango', 'puntos', 15, [1,3], True)
-        crt2=ec.Criterio('Frenos [Deteriorado][0-1]: Frenada', Frenos(),'igual', None, 0, 'Deteriorado', False)
-        crt3=ec.Criterio('Frenos [Aceptable][2-3]', Frenos(),'igual', None, 5, 'Aceptable', False) 
-        crt4=ec.Criterio('Frenos [Correcto][4]', Frenos(),'igual', None, 15, 'Correcto', False)    
-        crt5=ec.Criterio('Interior [Deteriorado][0-1]: cinturon, ventanillas, asientos, cuadro mandos', Interior(), 'igual', None, 0, 'Deteriorado', False)
+        crt2=ec.Criterio('Frenos [Deteriorado][0-1]: Frenada', Frenos(),'distinto', None, 0, 'Deteriorado', True)
+        crt3=ec.Criterio('Frenos [Aceptable][2-3]', Frenos(),'igual', None, 15, 'Aceptable', False) 
+        crt4=ec.Criterio('Frenos [Correcto][4]', Frenos(),'igual', None, 25, 'Correcto', False)    
+        crt5=ec.Criterio('Interior [Deteriorado][0-1]: cinturon, ventanillas, asientos, cuadro mandos', Interior(), 'distinto', None, 0, 'Deteriorado', True)
         crt6=ec.Criterio('Interior [Aceptable][2]', Interior(), 'igual', None, 5, 'Aceptable', False)  
         crt7=ec.Criterio('Interior [Correcto][3-4]', Interior(), 'igual', None, 15, 'Correcto', False) 
-        crt8=ec.Criterio('Carroceria  [Deteriorado][0-2]: puertas, retrovisores, parachoques, legibilidad y visibilidad matricula, guardabarros', Carroceria(), 'igual', None, 0, 'Deteriorado', False)
+        crt8=ec.Criterio('Carroceria  [Deteriorado][0-2]: puertas, retrovisores, parachoques, legibilidad y visibilidad matricula, guardabarros', Carroceria(), 'distinto', None, 0, 'Deteriorado', True)
         crt9=ec.Criterio('Carroceria [Aceptable][3-4]', Carroceria(), 'igual', None, 5, 'Aceptable', False)
         crt10=ec.Criterio('Carroceria [Correcto][5-6]', Carroceria(), 'igual', None, 15, 'Correcto', False)
-        crt11=ec.Criterio('Iluminacion [Deteriorado][0-1]: largas, cortas, carretera, antiniebla, intermitentes', Iluminacion(), 'igual', None, 0, 'Deteriorado', False)
+        crt11=ec.Criterio('Iluminacion [Deteriorado][0-1]: largas, cortas, carretera, antiniebla, intermitentes', Iluminacion(), 'distinto', None, 0, 'Deteriorado', True)
         crt12=ec.Criterio('Iluminacion [Aceptable][2-3]', Iluminacion(), 'igual', None, 5, 'Aceptable', False)
         crt13=ec.Criterio('Iluminacion [Correcto][4-5]', Iluminacion(), 'igual', None, 15, 'Correcto', False)
-        crt14=ec.Criterio('Suspension [Deteriorado][0]: muelles, amortiguadores', Suspension(), 'igual', None, 0, 'Deteriorado', False)
+        crt14=ec.Criterio('Suspension [Deteriorado][0]: muelles, amortiguadores', Suspension(), 'distinto', None, 0, 'Deteriorado', True)
         crt15=ec.Criterio('Suspension [Aceptable][1]', Suspension(), 'igual', None, 5, 'Aceptable', False)
         crt16=ec.Criterio('Suspension [Correcto][2]', Suspension(), 'igual', None, 15, 'Correcto', False)
-        crt17=ec.Criterio('Emisiones [Bajo][0]: impurezas bajos', Emisiones(), 'categorica', None, 15, ['Bajo','Alto'], False)
-        crt18=ec.Criterio('Emisiones [Alto][1]', Emisiones(), 'categorica', None, 5, ['Bajo','Alto'], False)
-        crt19=ec.Criterio('Niveles [Deteriorado][0-2]: frenos, aceite, refrigerador, limpiaparabrisas, conductos', Niveles(), 'igual', None, 0, 'Deteriorado', False)
-        crt20=ec.Criterio('Niveles [Aceptable][3]', Niveles(), 'igual', None, 5, 'Aceptable', False)
-        crt21=ec.Criterio('Niveles [Correcto][4-5]', Niveles(), 'igual', None, 15, 'Correcto', False)
-        crt22=ec.Criterio('Neumaticos [Deteriorado][0-2]: estado neumaticos, profundidad dibujo (nro neumaticos)', Neumaticos(), 'igual', None, 0, 'Deteriorado', False)
+        crt17=ec.Criterio('Emisiones [Bajo][0]: impurezas bajos', Emisiones(), 'igual', None, 10, 'Bajo', False)
+        crt18=ec.Criterio('Emisiones [Alto][1]', Emisiones(), 'igual', None, 5, 'Alto', False)
+        crt19=ec.Criterio('Niveles [Deteriorado][0-2]: frenos, aceite, refrigerador, limpiaparabrisas, conductos', Niveles(), 'distinto', None, 0, 'Deteriorado', True)
+        crt20=ec.Criterio('Niveles [Aceptable][3]', Niveles(), 'igual', None, 10, 'Aceptable', False)
+        crt21=ec.Criterio('Niveles [Correcto][4-5]', Niveles(), 'igual', None, 20, 'Correcto', False)
+        crt22=ec.Criterio('Neumaticos [Deteriorado][0-2]: estado neumaticos, profundidad dibujo (nro neumaticos)', Neumaticos(), 'distinto', None, 0, 'Deteriorado', True)
         crt23=ec.Criterio('Neumaticos [Aceptable][3]', Neumaticos(), 'igual', None, 5, 'Aceptable', False)
         crt24=ec.Criterio('Neumaticos [Correcto][4]', Neumaticos(), 'igual', None, 15, 'Correcto', False)
-        crt25=ec.Criterio('Motor [Deteriorado][0-1]: ruido, transmision, fuga de aceite', Motor(), 'igual', None, 0, 'Deteriorado', False)
+        crt25=ec.Criterio('Motor [Deteriorado][0-1]: ruido, transmision, fuga de aceite', Motor(), 'distinto', None, 0, 'Deteriorado', True)
         crt26=ec.Criterio('Motor [Aceptable][2]', Motor(), 'igual', None, 5, 'Aceptable', False)
         crt27=ec.Criterio('Motor [Correcto][3]', Motor(), 'igual', None, 15, 'Correcto', False)
-        criterios=ec.Criterios('Criterios de estado del vehículo', 55)
+        
+        criterios=ec.Criterios('Criterios de estado del vehículo', 35, 27) #Explicacion criterio, valor criterio, numero de criterios
+                                                                            #Si se introduce un tercer valor, entonces se obliga al 
+                                                                            #sistema a revisar todos los criterios para dar una
+                                                                            #valoracion mas precisa, en lugar de dar una valoracion
+                                                                            #positiva al alcanzar un umbral de puntuacion, que resulta
+                                                                            #impreciso cuando es necesario tener en cuenta todos los
+                                                                            #criterios
        
         criterios.append(crt1)
         criterios.append(crt2)
@@ -146,7 +153,7 @@ def criterios(valoracion):
         crt19=ec.Criterio('Motor [Deteriorado][0-1]: ruido, transmision, fuga de aceite', Motor(), 'igual', None, 0, 'Deteriorado', False)
         crt20=ec.Criterio('Motor [Aceptable][2]', Motor(), 'igual', None, 5, 'Aceptable', False)
         crt21=ec.Criterio('Motor [Correcto][3]', Motor(), 'igual', None, 15, 'Correcto', False)
-        criterios=ec.Criterios('Criterios de estado del vehículo', 55)
+        criterios=ec.Criterios('Criterios de estado del vehículo', 35, 21)
        
         criterios.append(crt1)
         criterios.append(crt2)

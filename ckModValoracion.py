@@ -47,7 +47,7 @@ class MetodoValoracion(Metodo):
         self.pmaxima = 0
         self.pnecesario = 60
         self.decision = None #decision que va a gobernar el bucle
-        self.explicacion = u"Procedimiento causal de valoración: \n\n"
+        self.explicacion = u"PROCEDIMIENTO \n\n"
         self.dom = devolverDominio()
 
     def execute(self):
@@ -66,18 +66,20 @@ class MetodoValoracion(Metodo):
         self.pmaxima = self.criterios.puntuacionmax() #La suma del valor de todos los criterios
         self.pnecesario = self.criterios.pnecesario #Puntos necesarios para cada caso
         
-        #mientras que no se decida nada..
+        self.ncriterios = self.criterios.ncriterios 
+        
+        #Mientras que no se decida nada...
         while(self.decision.decision == 0):
-            #selecciona un criterio
+            #Selecciona un criterio
             self.selector = Seleccionar(self.criterios)
             self.criterio = self.selector.execute()
             
-            #si la lista no esta vacia, eliminamos un criterio
-            #si no hay mas criterios, salimos del bucle y equiparamos antes
+            #Si la lista no esta vacia, eliminamos un criterio
+            #Si no hay mas criterios, salimos del bucle y equiparamos antes
             if(self.criterio == None):
                 print "\nNo quedan mas criterios...finalizando..." #Mostramos en consola
-                self.explicacion += u"\nNo quedan mas criterios...finalizando\n"
-                self.decision, self.valexpl = Equiparar(self.resultados, self.pmaxima, self.pnecesario, True).execute()
+                self.explicacion += u"\nNo quedan mas criterios\nFinalizando...\n"
+                self.decision, self.valexpl = Equiparar(self.resultados, self.pmaxima, self.pnecesario, True,self.ncriterios).execute()
                 self.explicacion += self.valexpl
                 break
             else:
@@ -86,20 +88,22 @@ class MetodoValoracion(Metodo):
             print "\nCriterio seleccionado: " + self.criterio.nombre
             self.explicacion += u"\nCriterio seleccionado: " + self.criterio.nombre + '\n\n'
             
-            #se evalua el caso con un criterio
+            #Se evalua el caso con un criterio
             self.valor, self.valexpl = Evaluar(self.caso, self.criterio).execute()
             self.explicacion += self.valexpl
             
-            #anade el nuevo valor a los resultados
+            #Añade el nuevo valor a los resultados
             self.resultados.append(self.valor)
             
-            #se equipara el resultado
-            self.decision, self.valexpl = Equiparar(self.resultados, self.pmaxima, self.pnecesario, False).execute()
+            #Se equipara el resultado
+            self.decision, self.valexpl = Equiparar(self.resultados, self.pmaxima, self.pnecesario, False,self.ncriterios).execute()
             self.explicacion += self.valexpl
+            
+            self.ncriterios -= 1
             
         print u'\nTarea finalizada'
         self.explicacion += u"Tarea finalizada\n"
-        #se anade la justificacion al objeto decision
+        #Se anade la justificacion al objeto decision
         self.decision.addexp(self.explicacion)
         #devuelve la decision
         return self.decision
@@ -166,7 +170,7 @@ class Evaluar(Inferencia):
                     if carac.valor < self.criterio.valor[0] or carac.valor > self.criterio.valor[1]:
                         if self.criterio.terminal == True:
                             self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no se encuentra en el rango " + str(self.criterio.valor) + u"\n"
-                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, fuera de rango"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, fuera de rango válido"
                             self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
                             self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no se encuentra en el rango " + str(self.criterio.valor) + u"\n"
@@ -184,7 +188,7 @@ class Evaluar(Inferencia):
                     if carac.valor != self.criterio.valor:
                         if self.criterio.terminal == True:
                             self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es igual a " + str(self.criterio.valor) + u"\n"
-                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no es igual"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no es valor válido"
                             self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
                             self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es igual a " + str(self.criterio.valor) + u"\n"
@@ -192,6 +196,23 @@ class Evaluar(Inferencia):
                             self.valor = dom.ec.Valor(self.criterio, self.caso, 0)
                     else:
                         self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" es igual a " + str(self.criterio.valor) + u"\n\n"
+                        self.explicacion += u"\n\t    Puntuación +" + str(self.criterio.puntuacion) + u" puntos\n"
+                        self.valor = dom.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
+                        
+                elif self.criterio.tipoComparacion == 'distinto':
+                    self.explicacion += u"\n\n\t-->Característica:\n\t    " + carac.atributo.nombre
+                    self.explicacion += u"\n\t    Valor: " + str(carac.valor)
+                    if carac.valor == self.criterio.valor:
+                        if self.criterio.terminal == True:
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" es igual a " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no es valor válido"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
+                        else:
+                            self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" es igual a " + str(self.criterio.valor) + u"\n"
+                            self.explicacion += u"\n\t    Puntuación +0 puntos\n"
+                            self.valor = dom.ec.Valor(self.criterio, self.caso, 0)
+                    else:
+                        self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es igual a " + str(self.criterio.valor) + u"\n\n"
                         self.explicacion += u"\n\t    Puntuación +" + str(self.criterio.puntuacion) + u" puntos\n"
                         self.valor = dom.ec.Valor(self.criterio, self.caso, self.criterio.puntuacion)
 
@@ -202,7 +223,7 @@ class Evaluar(Inferencia):
                     if carac.valor < self.criterio.valor:
                         if self.criterio.terminal == True:
                             self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es mayor que " + str(self.criterio.valor) + u"\n"
-                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, finalizado"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no es mayor que el valor indicado"
                             self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
                             self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es mayor que " + str(self.criterio.valor) + u"\n"
@@ -220,7 +241,7 @@ class Evaluar(Inferencia):
                     if carac.valor > self.criterio.valor:
                         if self.criterio.terminal == True:
                             self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es menor que " + str(self.criterio.valor) + u"\n"
-                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no es menor"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no es menor que el valor indicado"
                             self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
                             self.explicacion += u"\n\t    El valor " + str(carac.valor) + u" no es menor que " + str(self.criterio.valor) + u"\n"
@@ -240,7 +261,7 @@ class Evaluar(Inferencia):
                     if encontrado == False:
                         self.explicacion += u"\n\t    El valor "+ str(carac.valor) + u" no se encuentra dentro de "+ str(self.criterio.valor) + u"\n"
                         if self.criterio.terminal == True:
-                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no está contenido"
+                            self.explicacion += u"\n\t    Puntuación " + str(-1) + u" puntos, no está contenido en la categoría"
                             self.valor = dom.ec.Valor(self.criterio, self.caso, -1)
                         else:
                             self.explicacion += u"\n\t    Puntuación +0 puntos"
@@ -258,7 +279,7 @@ class Evaluar(Inferencia):
 #la variable de entrada final especifica si es el ultimo criterio a evaluar,
 #asi, si no se ha llegado a la puntuacion minima y es el ultimo, se rechaza
 class Equiparar(Inferencia):
-    def __init__(self, resultados, puntuacionmax, pnecesario, final):
+    def __init__(self, resultados, puntuacionmax, pnecesario, final,ncriterios):
         Inferencia.__init__(self)
         self.resultados = resultados
         self.puntuacion = resultados.show()
@@ -266,31 +287,33 @@ class Equiparar(Inferencia):
         self.pnecesario = pnecesario
         self.final = final
         self.explicacion = u" "
+        self.ncriterios = ncriterios
         
     def execute(self):
         dom = devolverDominio()
         print "\nEquiparando..."
+        print self.ncriterios
         self.explicacion += u"\n\n\n\tEquiparando el caso \n\t=========================="
         #por cada valor, si encontramos un negativo, se termina y se rechaza,
         #si no, se acumulan los valores.
         for valor in self.resultados.lresultados:
             if(valor.puntuacion == -1):
                 print "\nRECHAZADO"
-                self.explicacion += u"\n\tValor terminal -> DESFAVORABLE MUY GRAVE!\n\n\n"
+                self.explicacion += u"\n\tValor terminal -> DESFAVORABLE VALOR NO VÁLIDO\n\n\n"
                 return (dom.ec.Decision(-1,"caso rechazado"), self.explicacion)
         #una vez tiene los valores, si la puntuacion es mayor que el  minimo
         #se acepta y no se sigue el algoritmo, si este es el ultimo y la puntuacion
         #no es suficiente, se rechaza y acaba, si no se llega al minimo pero
         #quedan mas criterios, se continua
-        if(self.puntuacion * 100 / self.puntuacionmax > self.pnecesario):
+        if(self.puntuacion * 100 / self.puntuacionmax > self.pnecesario and self.ncriterios <= 0):
             print "\nACEPTADO" 
-            self.explicacion += u"\n\tPuntuación suficiente (" + str(self.puntuacion) + u") -> FAVORABLE!\n\n\n"
+            self.explicacion += u"\n\tPuntuación suficiente (" + str(self.puntuacion) + u") -> FAVORABLE\n\n\n"
             return (dom.ec.Decision(1, "caso aceptado"), self.explicacion)
         elif(self.final == True):
             print "\nRECHAZADO"
-            self.explicacion += u"\n\tPuntuación insuficiente (" + str(self.puntuacion) + u") -> DESFAVORABLE GRAVE!\n\n\n"
+            self.explicacion += u"\n\tPuntuación insuficiente (" + str(self.puntuacion) + u") -> DESFAVORABLE\n\n\n"
             return (dom.ec.Decision(-1, "finalizado insuficiente"), self.explicacion)
         else:
             print "\nCONTINUAR EVALUANDO..."
-            self.explicacion += u"\n\tPuntuación insuficiente (" + str(self.puntuacion) + u") -> CONTINUAR EVALUANDO\n\n\n"
+            self.explicacion += u"\n\tPuntuación insuficiente (" + str(self.puntuacion) + u") -> Continuar evaluando\n\n\n"
             return (dom.ec.Decision(0, "continuar evaluando"), self.explicacion)
