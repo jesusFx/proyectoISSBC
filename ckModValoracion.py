@@ -6,7 +6,7 @@ Nombre: ckModValoracion
 Descripcion: Funciones del sistema
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 05/06/2018
+Fecha: 06/06/2018
 """
 
 import domPan, domITV
