@@ -59,16 +59,17 @@ class Coccion(ec.Atributo):
 def criterios(valoracion):
     criterios = []
     
-    crt1=ec.Criterio('Harina [95-105]: peso (kg)', Harina(), 'rango', 'estado', 15, [95,105], True)
-    crt2=ec.Criterio('Agua [53-57]: capacidad (l)', Agua(),'rango', 'estado', 15, [53,57], True)       
-    crt3=ec.Criterio('Levadura [3-5]: peso (kg)', Levadura(), 'rango', 'estado', 15, [3,5], True)
-    crt4=ec.Criterio('Mejorante: peso', Mejorante(), 'categorica', None, 10, ['Si'], False)
-    crt5=ec.Criterio('Masa madre [19-21]: peso (kg)', MasaMadre(), 'rango', 'puntos', 15, [19,21], True)
-    crt6=ec.Criterio('Sal [1-3]: peso (kg)', Sal(), 'rango', 'estado', 15, [1,3], True)
-    crt7=ec.Criterio('Fermentacion [60-80]: tiempo (min)', Fermentacion(), 'rango', 'estado', 15, [60,80], True)
-    crt8=ec.Criterio('Horno [200-250]: temperatura (centig)', Horno(), 'rango', 'estado', 15, [200,250], True)
-    crt9=ec.Criterio('Coccion [25-45]: tiempo (min)', Coccion(), 'rango', 'estado', 15, [25,45], True)
-    criterios=ec.Criterios('Criterios de estado del pan', 50)
+    crt1=ec.Criterio('Harina [95-105]: peso (kg)', Harina(), 'rango', 'puntos', 15, [95,105], True)
+    crt2=ec.Criterio('Agua [53-57]: capacidad (l)', Agua(),'rango', 'puntos', 15, [53,57], True)       
+    crt3=ec.Criterio('Levadura [3-5]: peso (kg)', Levadura(), 'rango', 'puntos', 15, [3,5], True)
+    crt4=ec.Criterio('Mejorante [No]: peso', Mejorante(), 'categorica', 'puntos', 0, ['No'], False)
+    crt5=ec.Criterio('Mejorante [Si]: peso', Mejorante(), 'categorica', 'puntos', 10, ['Si'], False)
+    crt6=ec.Criterio('Masa madre [19-21]: peso (kg)', MasaMadre(), 'rango', 'puntos', 15, [19,21], True)
+    crt7=ec.Criterio('Sal [1-3]: peso (kg)', Sal(), 'rango', 'puntos', 15, [1,3], True)
+    crt8=ec.Criterio('Fermentacion [60-80]: tiempo (min)', Fermentacion(), 'rango', 'puntos', 15, [60,80], True)
+    crt9=ec.Criterio('Horno [200-250]: temperatura (centig)', Horno(), 'rango', 'puntos', 15, [200,250], True)
+    crt10=ec.Criterio('Coccion [25-45]: tiempo (min)', Coccion(), 'rango', 'puntos', 15, [25,45], True)
+    criterios=ec.Criterios('Criterios de estado del pan', 91, 10)
    
     criterios.append(crt1)
     criterios.append(crt2)
@@ -79,5 +80,6 @@ def criterios(valoracion):
     criterios.append(crt7)
     criterios.append(crt8)
     criterios.append(crt9)
+    criterios.append(crt10)
         
     return criterios

@@ -292,7 +292,6 @@ class Equiparar(Inferencia):
     def execute(self):
         dom = devolverDominio()
         print "\nEquiparando..."
-        print self.ncriterios
         self.explicacion += u"\n\n\n\tEquiparando el caso \n\t=========================="
         #por cada valor, si encontramos un negativo, se termina y se rechaza,
         #si no, se acumulan los valores.
