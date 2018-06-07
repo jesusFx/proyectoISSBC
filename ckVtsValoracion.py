@@ -23,11 +23,11 @@ class ValoracionDlg(QtGui.QWidget):
         
 
         #Labels
-        self.labelTableWidgetCaso=QtGui.QLabel(u"Caso", self)
+        self.labelTableWidgetCaso=QtGui.QLabel(u"Casos a valorar", self)
         self.labelListDominios=QtGui.QLabel(u"Dominio",self)
         self.labelListValoraciones=QtGui.QLabel(u"Tipo de valoración",self)
-        self.labelListCriterios=QtGui.QLabel(u"Criterios",self)
-        self.labelTextDescripcionCriterio=QtGui.QLabel(u"Descripcion del criterio", self)
+        self.labelListCriterios=QtGui.QLabel(u"Criterios que usa el sistema",self)
+        self.labelTextDescripcionCriterio=QtGui.QLabel(u"Descripcion del criterio seleccionado", self)
         self.labelTextjustificacionL=QtGui.QLabel(u"Justificación de la valoración", self)
         self.labelTextResultado=QtGui.QLabel(u"Resultado final")
         self.labelTextDecision=QtGui.QLabel(u" ",self)
@@ -191,7 +191,6 @@ class ValoracionDlg(QtGui.QWidget):
         grid.addWidget(self.plainTextEditResultado, 3,1,1,1)
         
         grid.addWidget(self.labelTextDescripcionCriterio, 4,1)
-        #grid.addWidget(self.plainTextEditDescripcionCriterio, 5,1)
         grid.addWidget(self.tableWidgetDCriterio, 5,1)
 
         grid.addWidget(self.labelTextjustificacionL, 0, 2)
@@ -211,7 +210,7 @@ class ValoracionDlg(QtGui.QWidget):
 
         #Geometría de la ventana emergente
         self.setGeometry(300, 300, 1100, 600)
-        self.setWindowTitle(u"Tarea de valoración")
+        self.setWindowTitle(u"Sistema de valoración")
         self.center()
         self.show()
 
@@ -224,7 +223,7 @@ class ValoracionDlg(QtGui.QWidget):
         self.borrarBtn.clicked.connect(self.borrar)
         self.salirBtn.clicked.connect(self.close)
 
-        #Para que comience mostrando el primer criterio en la descripcion
+        #Para que comience mostrando la descripcion del primer criterio en la descripcion
         self.showCriterio()
 
 
@@ -254,14 +253,10 @@ class ValoracionDlg(QtGui.QWidget):
 
     def showCriterio(self):
         row = self.listWidgetCriterios.currentRow()
-        #self.plainTextEditDescripcionCriterio.clear()
-        #self.plainTextEditDescripcionCriterio.appendPlainText(self.cri.lcriterios[row].descripcion())
         
         #Borra la descripcion de criterio actual
         while self.tableWidgetDCriterio.rowCount() > 0: 
             self.tableWidgetDCriterio.removeRow(0)
-        ##self.tableWidgetDCriterio.setItem(i, 1, item4)
-        #appendPlainText(self.cri.lcriterios[row].descripcion())
         
         #Reinserta las filas de los diferentes atributos de criterio
         while self.tableWidgetDCriterio.rowCount() < len(self.nombreDescriptores):
@@ -328,14 +323,12 @@ class ValoracionDlg(QtGui.QWidget):
     
     #Funcion que borra por pantalla
     def borrar(self):
-        #self.plainTextEditDescripcionCriterio.clear()
         self.plainTextEditExplicacion.clear()
         self.plainTextEditResultado.clear()
         
     def changeDominio(self,text):
         if text != ec.dominioActual:            
             #Limpiamos los datos de la interfaz del anterior dominio
-            #self.plainTextEditDescripcionCriterio.clear()
             self.plainTextEditExplicacion.clear()
             self.plainTextEditResultado.clear()
             for i in range(len(self.valoraciones)):
@@ -446,7 +439,6 @@ class ValoracionDlg(QtGui.QWidget):
 
     def changeValoracion(self,text):
         if text != self.dom.valoracionActual:
-            #self.plainTextEditDescripcionCriterio.clear()
             self.listWidgetCriterios.clear()
             self.dom.valoracionActual = text
             self.cri = self.dom.criterios(text)

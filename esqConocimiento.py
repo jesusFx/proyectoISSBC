@@ -55,7 +55,7 @@ class Criterio():
         self.tipoResultado = tipoResultado #Unidad del atributo
         self.puntuacion = puntuacion #Los puntos que da al ser aceptado
         self.valor = valor #Valor que debe tener el atributo para que se cumpla el criterio.
-                           #a puede ser una tupla para una comparación tipo rango
+                           #puede ser una tupla para una comparación tipo rango
         self.terminal = terminal #Si la condicion tiene que ser cumplida obligatoriamente
     def descripcion(self):
         '''Describimos el criterio en el panel del programa'''
