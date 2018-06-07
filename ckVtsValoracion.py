@@ -6,7 +6,7 @@ Nombre: ckVTSValoracion
 Descripcion: Vistas del sistema
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 06/06/2018
+Fecha: 07/06/2018
 """
 
 from PyQt4 import QtCore

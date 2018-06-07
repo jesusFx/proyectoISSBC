@@ -5,7 +5,7 @@ Nombre: domPan
 Descripcion: Fichero de dominio sobre el pan común
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
-Fecha: 06/06/2018
+Fecha: 07/06/2018
 """
 import esqConocimiento as ec
 
