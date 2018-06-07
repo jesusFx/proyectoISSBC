@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 """
 Nombre: domPan
-Descripcion: Fichero de dominio sobre el pan común
+Descripcion: Fichero de dominio sobre una tanda estándar de pan común
 Asignatura: ISSBC
 Autor: Jesus Jimenez Roman
 Fecha: 07/06/2018
 """
 import esqConocimiento as ec
 
-#Lista de Valoraciones
-valoraciones = ['Pan'] #Valoración por defecto, en este caso no se usa para la valoración del dominio
+#Lista de valoraciones
+valoraciones = [''] #Valoración por defecto, en este caso no se usa para la valoración del dominio
 valoracionActual = ''
 
 def inicializarCaso():
@@ -27,7 +27,7 @@ def inicializarCaso():
     solicitud=ec.Caso([harina,agua,levadura,mejorante,masaM,salY,fermentacion,horno,coccion])
     return solicitud
 
-#Elementos del dominio sobre prestamos
+#Elementos del dominio sobre pan
 class Harina(ec.Atributo):
     def __init__(self):
         ec.Atributo.__init__(self,'Harina trigo (kg)','int',None,'estado')

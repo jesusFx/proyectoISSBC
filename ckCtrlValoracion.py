@@ -10,8 +10,6 @@ Fecha: 07/06/2018
 """
 
 from PyQt4 import QtGui
-
-
 import ckModValoracion as ma
 
 def eventValorar(ValoracionDlg):

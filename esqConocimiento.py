@@ -55,7 +55,7 @@ class Criterio():
         self.tipoComparacion = tipoComparacion #Igual, distinto, mayor, menor, rango, categorica
         self.tipoResultado = tipoResultado #Unidad del atributo
         self.puntuacion = puntuacion #Los puntos que da al ser aceptado
-        self.valor = valor #Valor que debe tener el atributo para que se cumpla el criterio.
+        self.valor = valor #Valor que debe tener el atributo para que se cumpla el criterio,
                            #puede ser una tupla para una comparación tipo rango
         self.terminal = terminal #Si la condicion tiene que ser cumplida obligatoriamente
     def descripcion(self):
@@ -72,7 +72,7 @@ class Criterios():
     def __init__(self, nombre, pnecesario = 60, ncriterios = 0):
         self.nombre = nombre
         self.lcriterios = [] #Lista de los criterios del caso
-        self.pnecesario = pnecesario #porcentaje necesario para aceptar el caso
+        self.pnecesario = pnecesario #Porcentaje necesario para aceptar el caso
         self.ncriterios = ncriterios #Numero de criterios, obliga al sistema a cumplir todos los criterios en caso de ser necesario
     def append(self, criterio):
         '''Anade un nuevo criterio definido segun el conocimiento'''
@@ -80,7 +80,7 @@ class Criterios():
     def puntuacionmax(self):
         '''Retorna la puntuación al sumar el resultado de todos los criterios'''
         self.pmax = 0
-        for criterio in self.lcriterios: #recorremos la lista de criterios
+        for criterio in self.lcriterios: #Recorremos la lista de criterios
             print 'Criterio: ', criterio.nombre
             self.pmax += criterio.puntuacion
         return self.pmax

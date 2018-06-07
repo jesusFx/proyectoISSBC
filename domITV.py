@@ -15,7 +15,7 @@ import esqConocimiento as ec
 valoraciones = ['Coche','Motocicleta']
 valoracionActual = ''
 
-#Tabla de casos a valorar, junto con sus valores iniciales (editable para dinamizar el sistema)
+#Tabla de casos a valorar, junto con sus valores iniciales (valores editables para dinamizar el sistema)
 def inicializarCaso():
     documentacion=ec.Caracteristica(Documentacion(),1,'Coche, motocicleta')
     frenos=ec.Caracteristica(Frenos(),'Correcto','Coche')
@@ -31,7 +31,7 @@ def inicializarCaso():
     solicitud=ec.Caso([documentacion,frenos,interior,carroceria,iluminacion,suspension,emisiones,niveles,neumaticos,motor])
     return solicitud
 
-#Elementos del dominio sobre componentes de un vehículo y sobre la documentación adjunta
+#Elementos del dominio sobre componentes de un vehículo y sobre la documentación adjunta del conductor
 class Documentacion(ec.Atributo):
     def __init__(self):
         ec.Atributo.__init__(self,'Documentacion disponible','int',None,'Puntos')

@@ -276,7 +276,7 @@ class Evaluar(Inferencia):
 
 #Recibe un objeto Resultados, que es una lista de objetos Valores
 #y devuelve un objeto Decision, que contendra la decision para el caso
-#la variable de entrada final especifica si es el ultimo criterio a evaluar,
+#La variable de entrada final especifica si es el ultimo criterio a evaluar,
 #asi, si no se ha llegado a la puntuacion minima y es el ultimo, se rechaza
 class Equiparar(Inferencia):
     def __init__(self, resultados, puntuacionmax, pnecesario, final,ncriterios):
@@ -293,15 +293,16 @@ class Equiparar(Inferencia):
         dom = devolverDominio()
         print "\nEquiparando..."
         self.explicacion += u"\n\n\n\tEquiparando el caso \n\t=========================="
-        #por cada valor, si encontramos un negativo, se termina y se rechaza,
+        #Por cada valor, si encontramos un negativo, se termina y se rechaza,
         #si no, se acumulan los valores.
         for valor in self.resultados.lresultados:
             if(valor.puntuacion == -1):
                 print "\nRECHAZADO"
                 self.explicacion += u"\n\tValor terminal -> DESFAVORABLE VALOR NO VÁLIDO\n\n\n"
                 return (dom.ec.Decision(-1,"caso rechazado"), self.explicacion)
-        #una vez tiene los valores, si la puntuacion es mayor que el  minimo
-        #se acepta y no se sigue el algoritmo, si este es el ultimo y la puntuacion
+        #Una vez se tiene los valores, si la puntuacion es mayor que el minimo, y 
+        #opcionalmente se han recorrido todos los criterios, entonces se acepta 
+        #y no se sigue el algoritmo, si este es el ultimo y la puntuacion
         #no es suficiente, se rechaza y acaba, si no se llega al minimo pero
         #quedan mas criterios, se continua
         if(self.puntuacion * 100 / self.puntuacionmax > self.pnecesario and self.ncriterios <= 0):
