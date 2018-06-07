@@ -14,15 +14,16 @@ valoraciones = ['Pan'] #Valoración por defecto, en este caso no se usa para la 
 valoracionActual = ''
 
 def inicializarCaso():
-    harina=ec.Caracteristica(Harina(),100)
-    agua=ec.Caracteristica(Agua(),55)
-    levadura=ec.Caracteristica(Levadura(),4)
-    mejorante=ec.Caracteristica(Mejorante(), 'No')
-    masaM=ec.Caracteristica(MasaMadre(),20)
-    salY=ec.Caracteristica(Sal(),2)
-    fermentacion=ec.Caracteristica(Fermentacion(),70)
-    horno=ec.Caracteristica(Horno(),220)
-    coccion=ec.Caracteristica(Coccion(),35)
+    harina=ec.Caracteristica(Harina(),100, 'Pan')
+    agua=ec.Caracteristica(Agua(),55, 'Pan')
+    levadura=ec.Caracteristica(Levadura(),4, 'Pan')
+    mejorante=ec.Caracteristica(Mejorante(), 'No', 'Pan')
+    masaM=ec.Caracteristica(MasaMadre(),20, 'Pan')
+    salY=ec.Caracteristica(Sal(),2, 'Pan')
+    fermentacion=ec.Caracteristica(Fermentacion(),70, 'Pan')
+    horno=ec.Caracteristica(Horno(),220, 'Pan')
+    coccion=ec.Caracteristica(Coccion(),35, 'Pan')
+    
     solicitud=ec.Caso([harina,agua,levadura,mejorante,masaM,salY,fermentacion,horno,coccion])
     return solicitud
 

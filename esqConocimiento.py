@@ -29,9 +29,10 @@ class Atributo():
 
 class Caracteristica():
     '''Almacena el valor de un atributo'''
-    def __init__(self,atributo,valor):
+    def __init__(self,atributo,valor, aplica):
         self.atributo = atributo
         self.valor = valor
+        self.aplica = aplica #A qué dominio se aplica
 
 
 class Caso():

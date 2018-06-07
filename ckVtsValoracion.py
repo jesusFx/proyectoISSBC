@@ -40,10 +40,11 @@ class ValoracionDlg(QtGui.QWidget):
 
         
         #Tabla para caso
-        self.header = ['ATRIBUTO', 'VALOR']
-        self.tableWidgetCaso = QtGui.QTableWidget(len(self.caso.caracteristicas),2) #Crea la tabla de elementos observables de dos columnas
-        self.tableWidgetCaso.setColumnWidth(0, 160) #Asignan ancho a las columnas izq
-        self.tableWidgetCaso.setColumnWidth(1, 124) #Asignan ancho a las columnas derech
+        self.header = ['ATRIBUTO', 'VALOR', 'APLICA A']
+        self.tableWidgetCaso = QtGui.QTableWidget(len(self.caso.caracteristicas),3) #Crea la tabla de elementos observables de dos columnas
+        self.tableWidgetCaso.setColumnWidth(0, 160) #Asignan ancho a la columna izq
+        self.tableWidgetCaso.setColumnWidth(1, 124) #Asignan ancho a la columna central
+        self.tableWidgetCaso.setColumnWidth(2, 124) #Asignan ancho a la columna derech
         self.tableWidgetCaso.setHorizontalHeaderLabels(self.header) #Asigna el header a las columnas 
         
 
@@ -54,6 +55,7 @@ class ValoracionDlg(QtGui.QWidget):
 
             #Establecemos el item en la columna 0
             self.tableWidgetCaso.setItem(i, 0, item1)
+            
             if at.atributo.tipo == 'bool' or at.atributo.tipo == 'opciones' or at.atributo.tipo == 'varios':
                 item2= QtGui.QComboBox()
                 item2.addItems(at.atributo.posiblesValores)
@@ -64,6 +66,11 @@ class ValoracionDlg(QtGui.QWidget):
             elif isinstance(at.valor, str):
                 item2 = QtGui.QTableWidgetItem(at.valor)
                 self.tableWidgetCaso.setItem(i, 1, item2)
+                
+            item3 = QtGui.QTableWidgetItem(at.aplica) #Crea un item y le asigna el nombre de la observable
+            item3.setFlags(QtCore.Qt.ItemIsUserCheckable|QtCore.Qt.ItemIsEnabled) #Establece propiedades a las celdas de la primera columna
+            self.tableWidgetCaso.setItem(i, 2, item3)
+            
             i+=1
         
         #Lista de valoraciones
@@ -195,11 +202,6 @@ class ValoracionDlg(QtGui.QWidget):
 
         grid.addWidget(self.labelTextjustificacionL, 0, 2)
         grid.addWidget(self.plainTextEditExplicacion, 1, 2, 5, 1)
-        
-        
-        
-
-        #grid.addWidget(self.labelTextDecision, 6, 0, 6, 2)
 
         #Diseño principal
         mainLayout = QtGui.QVBoxLayout()
@@ -226,14 +228,11 @@ class ValoracionDlg(QtGui.QWidget):
         #Para que comience mostrando la descripcion del primer criterio en la descripcion
         self.showCriterio()
 
-
-
     def center(self):
         qr = self.frameGeometry()
         cp = QtGui.QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-
 
     def recogerDatos(self):
         for i in range(self.tableWidgetCaso.rowCount()):
@@ -272,7 +271,6 @@ class ValoracionDlg(QtGui.QWidget):
                     item3 = QtGui.QTableWidgetItem(l) #Crea un item y le asigna el nombre de la observable
                     item3.setFlags(QtCore.Qt.ItemIsUserCheckable|QtCore.Qt.ItemIsEnabled) #Establece propiedades a las celdas de la primera columna
                     self.tableWidgetDCriterio.setItem(i, 0, item3) #Establecemos el item en la columna 0
-        
             
             if i == row:
                 item4= QtGui.QTableWidgetItem(at2.nombre)
@@ -364,6 +362,10 @@ class ValoracionDlg(QtGui.QWidget):
                 elif isinstance(at.valor, str):
                     item2 = QtGui.QTableWidgetItem(at.valor)
                     self.tableWidgetCaso.setItem(i, 1, item2)
+                    
+                item3 = QtGui.QTableWidgetItem(at.aplica) #Crea un item y le asigna el nombre de la observable
+                item3.setFlags(QtCore.Qt.ItemIsUserCheckable|QtCore.Qt.ItemIsEnabled) #Establece propiedades a las celdas de la primera columna
+                self.tableWidgetCaso.setItem(i, 2, item3)
                 i+=1
                 
             #Tabla para descripcion criterio

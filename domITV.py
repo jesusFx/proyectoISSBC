@@ -17,16 +17,16 @@ valoracionActual = ''
 
 #Tabla de casos a valorar, junto con sus valores iniciales (editable para dinamizar el sistema)
 def inicializarCaso():
-    documentacion=ec.Caracteristica(Documentacion(),1)
-    frenos=ec.Caracteristica(Frenos(),'Correcto')
-    interior=ec.Caracteristica(Interior(),'Correcto')
-    carroceria=ec.Caracteristica(Carroceria(),'Correcto')
-    iluminacion=ec.Caracteristica(Iluminacion(),'Correcto')
-    suspension=ec.Caracteristica(Suspension(),'Correcto')
-    emisiones=ec.Caracteristica(Emisiones(),'Bajo')
-    niveles=ec.Caracteristica(Niveles(),'Correcto')
-    neumaticos=ec.Caracteristica(Neumaticos(),'Correcto')
-    motor=ec.Caracteristica(Motor(),'Correcto')
+    documentacion=ec.Caracteristica(Documentacion(),1,'Coche, motocicleta')
+    frenos=ec.Caracteristica(Frenos(),'Correcto','Coche')
+    interior=ec.Caracteristica(Interior(),'Correcto','Coche')
+    carroceria=ec.Caracteristica(Carroceria(),'Correcto','Coche, motocicleta')
+    iluminacion=ec.Caracteristica(Iluminacion(),'Correcto','Coche, motocicleta')
+    suspension=ec.Caracteristica(Suspension(),'Correcto','Coche, motocicleta')
+    emisiones=ec.Caracteristica(Emisiones(),'Bajo','Coche, motocicleta')
+    niveles=ec.Caracteristica(Niveles(),'Correcto','Coche, motocicleta')
+    neumaticos=ec.Caracteristica(Neumaticos(),'Correcto','Coche, motocicleta')
+    motor=ec.Caracteristica(Motor(),'Correcto','Coche, motocicleta')
     
     solicitud=ec.Caso([documentacion,frenos,interior,carroceria,iluminacion,suspension,emisiones,niveles,neumaticos,motor])
     return solicitud
