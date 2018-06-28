@@ -2,7 +2,17 @@
 
 Descripción: Diseño de un sistema basado en conocimiento orientado a valoración, para la asignatura de Ingeniería Software de Sistemas Basados en Conocimiento de la Universidad de Córdoba (Curso 2017-2018)
 
+Entorno de diseño: 
 
+	Eclipse Oxigen (versión de abril 2018)
+	
+Lenguajes usados en el proyecto: 
+	
+	Python 2.7.14
+	PyDev 6.4.1 para Eclipse
+	PyQT 4.11.4 para Python 2.7 (instalador externo)
+		- Puede encontrarse en el siguiente enlace: https://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-4.11.4/
+	
 Últimas correcciones en el software:
 
 	-ckModValoracion:
@@ -23,3 +33,7 @@ Descripción: Diseño de un sistema basado en conocimiento orientado a valoración,
 		-Se ha corregido la justificacion devuelta
 		-Reordenados los apartados gráficos del programa
 		-Incluidos en los casos una tercera columna con las valoraciones a las que se aplica los casos debido a la estaticidad de estos
+		
+Estado del proyecto:
+
+	Verificado que el ejecutable no presenta errores de ningún tipo
