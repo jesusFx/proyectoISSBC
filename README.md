@@ -1,8 +1,9 @@
-# proyectoISSBC
-Trabajo de valoración de la asignatura ISSBC
+# Proyecto Sistema Basado en Conocimiento [Valoración]
+
+Descripción: Diseño de un sistema basado en conocimiento orientado a valoración, para la asignatura de Ingeniería Software de Sistemas Basados en Conocimiento de la Universidad de Córdoba (Curso 2017-2018)
 
 
-Correcciones en el software:
+Últimas correcciones en el software:
 
 	-ckModValoracion:
 		-El sistema valora el problema pudiendo tomar en cuenta todos los criterios, y no solo aquellos hasta que se alcanza la puntuación mínima
