@@ -36,4 +36,4 @@ Lenguajes usados en el proyecto:
 		
 Estado del proyecto:
 
-	Verificado que el ejecutable no presenta errores de tipo básico
+	Archivado (descontinuación del proyecto)
