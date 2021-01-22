@@ -1,6 +1,6 @@
 # Proyecto Sistema Basado en Conocimiento [Valoración]
 
-Descripción: Diseño de un sistema basado en conocimiento orientado a valoración, para la asignatura de Ingeniería Software de Sistemas Basados en Conocimiento de la Universidad de Córdoba (Curso 2017-2018)
+Descripción: Diseño de un sistema basado en conocimiento orientado a valoración, para la asignatura de Ingeniería Software de Sistemas Basados en Conocimiento de la Universidad de Córdoba 2018 (archivado)
 
 Entorno de diseño: 
 
